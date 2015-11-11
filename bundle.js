@@ -66,7 +66,7 @@
 	  );
 	};
 
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getById('formoSample'));
+	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById("formo"));
 
 /***/ },
 /* 1 */
