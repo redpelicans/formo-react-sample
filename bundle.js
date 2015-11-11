@@ -58,6 +58,12 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var formo = new _formo.Formo([new _formo.Field('name', {
+	  label: 'Name',
+	  type: 'text',
+	  required: true
+	})]);
+
 	var App = function App() {
 	  return _react2.default.createElement(
 	    'span',
