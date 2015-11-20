@@ -16,13 +16,11 @@ function rndColor() {
   return colors[ index ];
 }
 
-function avatartarUrlValueChecker(res){
-  return function(price){
-    const promise = new Promise( (resolve, reject) => {
-      setTimeout( () => resolve({checked: res, error: 'server error'}), 20);
-    });
-    return promise;
-  }
+function avatartarUrlValueChecker(url){
+  const promise = new Promise( (resolve, reject) => {
+    setTimeout( () => resolve({checked: true, error: 'server error'}), 100);
+  });
+  return promise;
 }
 
 export default function person(document){

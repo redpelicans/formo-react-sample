@@ -347,9 +347,7 @@ export class SelectColorField extends Component {
     let fieldsetClassNames = classNames( "form-group", { 'has-error': hasError() });
     let selectClassNames= classNames( 'tm select form-control', { 'form-control-error': hasError() });
 
-    let options = _.map(this.props.options, color => {
-      return { key: color, value: color};
-    });
+    const options = field.domainValue;
 
     return(
       <fieldset className={fieldsetClassNames}>

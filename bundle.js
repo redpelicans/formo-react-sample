@@ -48024,15 +48024,13 @@
 	  return colors[index];
 	}
 
-	function avatartarUrlValueChecker(res) {
-	  return function (price) {
-	    var promise = new Promise(function (resolve, reject) {
-	      setTimeout(function () {
-	        return resolve({ checked: res, error: 'server error' });
-	      }, 20);
-	    });
-	    return promise;
-	  };
+	function avatartarUrlValueChecker(url) {
+	  var promise = new Promise(function (resolve, reject) {
+	    setTimeout(function () {
+	      return resolve({ checked: true, error: 'server error' });
+	    }, 100);
+	  });
+	  return promise;
 	}
 
 	function person(document) {
@@ -61592,9 +61590,7 @@
 	      var fieldsetClassNames = (0, _classnames2['default'])("form-group", { 'has-error': hasError() });
 	      var selectClassNames = (0, _classnames2['default'])('tm select form-control', { 'form-control-error': hasError() });
 
-	      var options = _.map(this.props.options, function (color) {
-	        return { key: color, value: color };
-	      });
+	      var options = field.domainValue;
 
 	      return _react2['default'].createElement(
 	        'fieldset',
