@@ -48002,6 +48002,7 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
+	exports.avatartarUrlValueChecker = avatartarUrlValueChecker;
 	exports['default'] = person;
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -48019,18 +48020,42 @@
 
 	var avatarTypes = [{ key: 'color', value: 'Color Picker' }, { key: 'url', value: 'Logo URL' }, { key: 'src', value: 'Logo File' }];
 
+	function parseJSON(res) {
+	  return res.json();
+	}
+
+	function checkStatus(res) {
+	  if (res.status >= 200 && res.status < 300) {
+	    return res;
+	  } else {
+	    var error = new Error(res.statusText);
+	    error.res = res;
+	    throw error;
+	  }
+	}
+
 	function rndColor() {
 	  var index = Math.floor(Math.random() * colors.length);
 	  return colors[index];
 	}
 
 	function avatartarUrlValueChecker(url) {
-	  var promise = new Promise(function (resolve, reject) {
-	    setTimeout(function () {
-	      return resolve({ checked: true, error: 'server error' });
-	    }, 100);
+	  if (!url) return new Promise(function (resolve) {
+	    return resolve({ checked: true });
 	  });
-	  return promise;
+	  return fetch('https://hook.io/eric-basley/imageurlchecker', {
+	    method: 'post',
+	    headers: {
+	      'Accept': 'application/json',
+	      'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify({ url: url })
+	  }).then(checkStatus).then(parseJSON).then(function (json) {
+	    return {
+	      checked: json.ok,
+	      error: !json.ok && "Wrong URL!"
+	    };
+	  });
 	}
 
 	function person(document) {

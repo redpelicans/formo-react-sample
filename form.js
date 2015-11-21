@@ -11,17 +11,48 @@ const avatarTypes = [
   {key: 'src', value: 'Logo File'}
 ];
 
+function parseJSON(res) {
+  return res.json()
+}
+
+function checkStatus(res) {
+  if (res.status >= 200 && res.status < 300) {
+    return res
+  } else {
+    var error = new Error(res.statusText)
+    error.res = res
+    throw error
+  }
+}
+
 function rndColor() {
   let index = Math.floor(Math.random() * colors.length);
   return colors[ index ];
 }
 
-function avatartarUrlValueChecker(url){
-  const promise = new Promise( (resolve, reject) => {
-    setTimeout( () => resolve({checked: true, error: 'server error'}), 100);
+
+export function avatartarUrlValueChecker(url){
+  if(!url) return new Promise(resolve => resolve({checked: true}));
+  return fetch('https://hook.io/eric-basley/imageurlchecker', {
+    method: 'post',
+    headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({url: url})
+  })
+  .then(checkStatus)
+  .then(parseJSON)
+  .then(json => {
+    return { 
+      checked: json.ok, 
+      error: !json.ok && "Wrong URL!" 
+    };
   });
-  return promise;
 }
+
+
+
 
 export default function person(document){
   return new Formo([
